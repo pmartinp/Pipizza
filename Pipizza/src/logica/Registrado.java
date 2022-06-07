@@ -14,15 +14,6 @@ public class Registrado extends Usuario{
 	private Direccion direccion;
 	private int puntos=0;
 	
-	public Registrado(int id, Date fecha_nac, Venta ticket, String email, String nombre, String apellidos,
-			String contrasena, Direccion direccion) {
-		super(id, fecha_nac, ticket);
-		this.email = email;
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.contrasena = contrasena;
-		this.direccion = direccion;
-	}
 	
 	public Registrado(int id, Date fecha_nac, String email, String nombre, String apellidos,
 			String contrasena, Direccion direccion) {
@@ -120,10 +111,10 @@ public class Registrado extends Usuario{
 	    }
 	
 	//Una vez que hace el login guardar datos del usuario
-    public Usuario cargarusuario(String id_usuario){
+    public Usuario cargarusuario(String email){
          try{
             statement = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            String sql=("SELECT * FROM usuario WHERE  dni="+dni);
+            String sql=("SELECT * FROM Usuario WHERE  email="+email);
             System.out.println(sql);
             ResultSet rs = statement.executeQuery(sql);
             
@@ -132,9 +123,8 @@ public class Registrado extends Usuario{
             if (rs.next()){
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setDNI(rs.getString("dni"));
-                usuario.setApellido1(rs.getString("apellido1"));
-                usuario.setApellido2(rs.getString("apellido2"));
-                usuario.setDinero(rs.getInt("saldo"));
+                usuario.setApellidos(rs.getString("apellidos"));
+                usuario.setPuntos(rs.getInt("Puntos"));
              }
             return usuario;
         }catch (SQLException e){
@@ -152,7 +142,7 @@ public class Registrado extends Usuario{
 		if (conec != null) {
 			try {
 				//codigo de mysql para insertar datos en la tabla usuario
-				String insert = "INSERT INTO usuario (fecha_nacimiento, email, nombre, apellidos, contrasena) "
+				String insert = "INSERT INTO Usuario (fecha_nacimiento, email, nombre, apellidos, contrasena,) "
 						+ "VALUES('"+ usuario.getFecha_nac() +"', '"+ usuario.getEmail() +"', '"+ usuario.getNombre()
 						+"', '"+ usuario.getApellidos() +"', '"+usuario.getContrasena()+"');";
 				
@@ -169,10 +159,10 @@ public class Registrado extends Usuario{
 		}
 	}
 	//Compruebo si el usuario ha sido registrado.
-	    public boolean ComprobarRegistrado(Conexion c, String usuario){
+	    public boolean ComprobarRegistrado(Conexion c, String email){
 	       try{
 	            statement = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-	            String sql=("SELECT dni FROM usuario WHERE dni LIKE "+usuario);
+	            String sql=("SELECT email FROM Usuario WHERE email LIKE "+email);
 	            ResultSet rs = statement.executeQuery(sql);
 	          
 	            if (rs.next()){
