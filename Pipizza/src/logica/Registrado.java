@@ -97,6 +97,56 @@ public class Registrado extends Usuario{
 		}
 	}
 	
+	//si puedes iniciar sesion
+	 public boolean HacerLogin(String email, String contrasena, Conexion c){
+	       try{
+	            statement = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	            String sql=("SELECT email,contraseÃ±a FROM usuario WHERE  email="+email+" and contraseÃ±a=" +contrasena);
+	            System.out.println(sql);
+	            ResultSet rs = statement.executeQuery(sql);
+	            
+	            if (rs.next()){
+	                 return true;
+	             }else{
+	                return false;
+	            }
+	            
+	        }catch (SQLException e){
+	            System.err.println("Error en la base de datos: "+e);
+	            return false;
+	        }finally {
+				c.cerrarConexion(conec);
+			}
+	    }
+	
+	//Una vez que hace el login guardar datos del usuario
+    public Usuario cargarusuario(String id_usuario){
+         try{
+            statement = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            String sql=("SELECT * FROM usuario WHERE  dni="+dni);
+            System.out.println(sql);
+            ResultSet rs = statement.executeQuery(sql);
+            
+            Usuario usuario= new Usuario();
+            
+            if (rs.next()){
+                usuario.setNombre(rs.getString("nombre"));
+                usuario.setDNI(rs.getString("dni"));
+                usuario.setApellido1(rs.getString("apellido1"));
+                usuario.setApellido2(rs.getString("apellido2"));
+                usuario.setDinero(rs.getInt("saldo"));
+             }
+            return usuario;
+        }catch (SQLException e){
+            System.err.println("Error en la base de datos: "+e);
+            return null;
+		 
+        }finally {
+			c.cerrarConexion(conec);
+	 }
+    }
+	
+	//registrar usuario
 	public static void registrarUsuario(Conexion c, Registrado usuario) {
 		Connection conec = c.conexionBBDD();
 		if (conec != null) {
@@ -118,4 +168,26 @@ public class Registrado extends Usuario{
 			}
 		}
 	}
+	//Compruebo si el usuario ha sido registrado.
+	    public boolean ComprobarRegistrado(Conexion c, String usuario){
+	       try{
+	            statement = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	            String sql=("SELECT dni FROM usuario WHERE dni LIKE "+usuario);
+	            ResultSet rs = statement.executeQuery(sql);
+	          
+	            if (rs.next()){
+	                 return true;
+	             }else{
+	                return false;
+	            }
+	            
+	        }catch (SQLException e){
+	            System.err.println("Error en la base de datos: "+e);
+	            return false;
+	        } finally {
+				c.cerrarConexion(conec);
+			}
+	    }
+	
+	
 }
