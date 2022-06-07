@@ -13,6 +13,11 @@ public class Usuario {
 		this.fecha_nac = fecha_nac;
 		this.ticket = ticket;
 	}
+	
+	public Usuario(int id, Date fecha_nac) {
+		this.id = id;
+		this.fecha_nac = fecha_nac;
+	}
 
 	public int getId() {
 		return id;

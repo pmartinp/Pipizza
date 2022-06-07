@@ -8,7 +8,7 @@ public class Conexion {
 	//driver JDBC
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	//direcci�n de la BD MySQL
-	private static final String BBDD = "jdbc:mysql://localhost:3306/categorias_productos";
+	private static final String BBDD = "jdbc:mysql://localhost:3306/pipizza";
 	//ususario y contrase�a de acceso a la BD
 	private static final String USUARIO = "root";
 	private static final String PASSWORD = "";
