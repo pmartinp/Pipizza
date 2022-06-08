@@ -54,7 +54,7 @@ public class Registrado extends Usuario{
 		if(comprobarContra(contrasena)) {
 			this.contrasena = contrasena;
 		}else {
-			System.err.println("No se ha podido cambiar la contraseña");
+			System.err.println("No se ha podido cambiar la contraseÃ±a");
 		}
 	}
 	public Direccion getDireccion() {
@@ -72,7 +72,7 @@ public class Registrado extends Usuario{
 	
 	//falta terminarlo
 	public static boolean comprobarContra(String contrasena) {
-		String regx = "[a-zA-Z0-9]{8,20}*";
+		String regx =  "^(?=.*[0-9])(?=.*[az])(?=.*[AZ])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,20}$";
 		if(contrasena.matches(regx)) {
 			return true;
 		}
