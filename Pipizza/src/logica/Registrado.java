@@ -1,16 +1,9 @@
 package logica;
 
-import java.sql.Connection;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Registrado extends Usuario{
-	static Conexion c = new Conexion();
-	
-	public Connection conec;
-	private Statement statement;
+
 	private String email;
 	private String nombre;
 	private String apellidos;
@@ -28,6 +21,7 @@ public class Registrado extends Usuario{
 		this.contrasena = contrasena;
 		this.direccion = direccion;
 	}
+	public Registrado() {}
 	
 	public String getEmail() {
 		return email;
@@ -90,29 +84,5 @@ public class Registrado extends Usuario{
 			return false;
 		}
 	}
-	
-	//registrar usuario
-	public static void registrarUsuario(Conexion c, Registrado usuario) {
-		Connection conec = c.conexionBBDD();
-		if (conec != null) {
-			try {
-				//codigo de mysql para insertar datos en la tabla usuario
-				String insert = "INSERT INTO Usuario (fecha_nacimiento, email, nombre, apellidos, contrasena,) "
-						+ "VALUES('"+ usuario.getFecha_nac() +"', '"+ usuario.getEmail() +"', '"+ usuario.getNombre()
-						+"', '"+ usuario.getApellidos() +"', '"+usuario.getContrasena()+"');";
-				
-				Statement ins = conec.createStatement();
-				
-				ins.executeUpdate(insert);
-				System.out.println("\nDatos insertados correctamente");
-				ins.close();
-			} catch(SQLException e) {
-				System.out.println("Se ha producido un error al insertar en la Base de datos.\n"+ e);
-			} finally {
-				c.cerrarConexion(conec);
-			}
-		}
-	}
-	
-	
 }
+	
