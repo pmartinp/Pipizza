@@ -52,7 +52,7 @@ public class Registrado extends Usuario{
 	}
 	public void setContrasena(String contrasena) {
 		if(comprobarContra(contrasena)) {
-			this.contrasena = contrasena;
+			this.contrasena = CifradoPassword.sha1(contrasena);
 		}else {
 			System.err.println("No se ha podido cambiar la contraseña");
 		}
@@ -70,7 +70,6 @@ public class Registrado extends Usuario{
 		this.puntos = puntos;
 	}
 	
-	//falta terminarlo
 	public static boolean comprobarContra(String contrasena) {
 		String regx =  "^(?=.*[0-9])(?=.*[az])(?=.*[AZ])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,20}$";
 		if(contrasena.matches(regx)) {
